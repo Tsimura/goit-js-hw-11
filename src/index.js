@@ -1,4 +1,4 @@
-import './sass/main.scss';
+import './css/styles.css';
 
 // Шаблон разметки карточки одного изображения для галереи.
 // <div class="photo-card">

@@ -1,13 +1,30 @@
 import './css/styles.css';
-// import { fetchImages } from '../src/js/fetchImages';
+import ImagesApiService from './js/images-servise';
 
-const url = `https://pixabay.com/api`;
-const keyValue = ``;
-return fetch(
-  `${url}/?key=24121745-05691669c6e1f2eaf3f0511ee&q=yellow+flowers&image_type=photo&image_type=photo&orientation=horizontal&safesearch=true&per_page=40`,
-)
-  .then(response => response.json())
-  .then(console.log());
+const refs = {
+  searchForm: document.querySelector('.search-form'),
+  gallery: document.querySelector('.gallery'),
+  btnLoadMore: document.querySelector('.load-more'),
+};
+const imagesApiService = new ImagesApiService();
+// console.log(refs.searchForm);
+// console.log(refs.gallery);
+// console.log(refs.btnLoadMpre);
+
+refs.searchForm.addEventListener('submit', onSearch);
+refs.btnLoadMore.addEventListener('click', onLoadMore);
+
+function onSearch(event) {
+  event.preventDefault();
+  imagesApiService.query = event.currentTarget.elements.searchQuery.value;
+
+  console.log(imagesApiService.query);
+  imagesApiService.fetchImages();
+}
+
+function onLoadMore() {
+  imagesApiService.fetchImages();
+}
 
 // Каждое изображение описывается объектом, из которого тебе интересны только следующие свойства:
 

@@ -1,3 +1,4 @@
+// import imagesCardsTpl from './templates/images-card.hbs';
 import './css/styles.css';
 import ImagesApiService from './js/images-servise';
 
@@ -17,14 +18,21 @@ refs.btnLoadMore.addEventListener('click', onLoadMore);
 function onSearch(event) {
   event.preventDefault();
   imagesApiService.query = event.currentTarget.elements.searchQuery.value;
+  imagesApiService.resetPage();
 
-  console.log(imagesApiService.query);
-  imagesApiService.fetchImages();
+  // console.log(imagesApiService.query);
+  imagesApiService.fetchImages().then(hits => console.log(hits));
+  // then(appendImagesMarkup);
 }
 
 function onLoadMore() {
-  imagesApiService.fetchImages();
+  imagesApiService.fetchImages().then(hits => console.log(hits));
+  // then(appendImagesMarkup);
 }
+
+// function appendImagesMarkup(hits) {
+//   refs.gallery.insertAdjacentHTML('beforeend', imagesCardsTpl(hits));
+// }
 
 // Каждое изображение описывается объектом, из которого тебе интересны только следующие свойства:
 
@@ -36,21 +44,6 @@ function onLoadMore() {
 // comments - количество комментариев.
 // downloads - количество загрузок.
 
-// Шаблон разметки карточки одного изображения для галереи.
-// <div class="photo-card">
-//   <img src="" alt="" loading="lazy" />
-//   <div class="info">
-//     <p class="info-item">
-//       <b>Likes</b>
-//     </p>
-//     <p class="info-item">
-//       <b>Views</b>
-//     </p>
-//     <p class="info-item">
-//       <b>Comments</b>
-//     </p>
-//     <p class="info-item">
-//       <b>Downloads</b>
-//     </p>
-//   </div>
-// </div>
+// рендер карточок: https://youtu.be/poxVZxvONF8?t=3271
+
+// https://youtu.be/poxVZxvONF8?t=798

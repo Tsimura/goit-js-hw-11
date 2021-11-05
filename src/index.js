@@ -1,3 +1,8 @@
+// Описан в документации
+import SimpleLightbox from 'simplelightbox';
+// Дополнительный импорт стилей
+import 'simplelightbox/dist/simple-lightbox.min.css';
+//=======
 import imagesCardsTpl from './templates/images-card.hbs';
 import './css/styles.css';
 import ImagesApiService from './js/images-servise';
@@ -51,3 +56,10 @@ function appendImagesMarkup(hits) {
 function clearImagesGallery() {
   refs.gallery.innerHTML = '';
 }
+
+const lightbox = new SimpleLightbox('.gallery a', {
+  captions: true,
+  captionsData: 'alt',
+  captionPosition: 'bottom',
+  captionDelay: 250,
+});

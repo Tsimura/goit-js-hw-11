@@ -9,26 +9,28 @@ export default class ImagesApiService {
 
   async fetchImages() {
     // console.log(this);
-    const url = `https://pixabay.com/api`;
-    const key = `24121745-05691669c6e1f2eaf3f0511ee`;
+    const BASE_URL = `https://pixabay.com/api`;
+    const API_KEY = `24121745-05691669c6e1f2eaf3f0511ee`;
 
     //https://youtu.be/poxVZxvONF8?t=2597
 
     // return
+    // підведення підсумків https://youtu.be/poxVZxvONF8?t=3957
     const response = await fetch(
-      `${url}/?key=${key}&q=${this.searchQuery}&image_type=photo&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&page=${this.page}`,
+      `${BASE_URL}/?key=${API_KEY}&q=${this.searchQuery}&image_type=photo&image_type=photo&orientation=horizontal&safesearch=true&per_page=5&page=${this.page}`,
     );
     console.log(response);
-    const newImage = await response.json().then(data => {
+    const newImage = await response.json().then(({ hits, totalHits }) => {
       this.incrementPage();
-      console.log(data);
-      return data.hits;
+      console.log(hits);
+      // console.log('totalHits:', totalHits);
+      return hits;
     });
     return newImage;
     //============================================================
     //   try {
     //     const response = await axios.get(
-    //       `${url}/?key=${key}&q=${this.searchQuery}&image_type=photo&image_type=photo&orientation=horizontal&safesearch=true&per_page=5&page=${this.page}`,
+    //       `${BASE_URL}/?key=${API_KEY}&q=${this.searchQuery}&image_type=photo&image_type=photo&orientation=horizontal&safesearch=true&per_page=5&page=${this.page}`,
     //     );
     //     console.log(response);
 

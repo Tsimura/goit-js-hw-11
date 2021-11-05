@@ -1,49 +1,47 @@
 import imagesCardsTpl from './templates/images-card.hbs';
 import './css/styles.css';
 import ImagesApiService from './js/images-servise';
+import LoadMoreBtn from './js/components/load-more-btn';
 
 const refs = {
   searchForm: document.querySelector('.search-form'),
   gallery: document.querySelector('.gallery'),
-  btnLoadMore: document.querySelector('.load-more'),
 };
+const loadMoreBtn = new LoadMoreBtn({ selector: '.load-more', hidden: true });
 const imagesApiService = new ImagesApiService();
-// console.log(refs.searchForm);
-// console.log(refs.gallery);
-// console.log(refs.btnLoadMpre);
 
 refs.searchForm.addEventListener('submit', onSearch);
-refs.btnLoadMore.addEventListener('click', onLoadMore);
+loadMoreBtn.refs.button.addEventListener('click', fetchImages);
 
 function onSearch(event) {
   event.preventDefault();
 
-  imagesApiService.query = event.currentTarget.elements.searchQuery.value;
+  imagesApiService.query = event.currentTarget.elements.searchQuery.value.trim();
+  if (imagesApiService.query === '') {
+    return alert('Введіть параметр запиту!');
+  }
+  loadMoreBtn.show();
   imagesApiService.resetPage();
-
-  imagesApiService.fetchImages().then(images => {
-    clearImagesGallery();
-    appendImagesMarkup(images);
-  });
-  // .catch(error => console.log(error));
+  clearImagesGallery();
+  fetchImages();
 }
 
-function onLoadMore() {
-  imagesApiService.fetchImages().then(appendImagesMarkup);
-  // .catch(error => console.log(error));
+function fetchImages() {
+  loadMoreBtn.disable();
+  imagesApiService.fetchImages().then(images => {
+    appendImagesMarkup(images);
+    loadMoreBtn.enable();
+  });
 }
 
 function appendImagesMarkup(hits) {
   if (hits.length === 0) {
-    console.log('Sorry, there are no images matching your search query. Please try again.');
+    alert('Sorry, there are no images matching your search query. Please try again.');
   }
-  console.log(hits);
+  // console.log(hits);
   refs.gallery.insertAdjacentHTML('beforeend', imagesCardsTpl(hits));
 }
 
 function clearImagesGallery() {
   refs.gallery.innerHTML = '';
 }
-// рендер карточок: https://youtu.be/poxVZxvONF8?t=3271
-
-// https://youtu.be/poxVZxvONF8?t=798

@@ -22,7 +22,7 @@ img {
 
   padding-top: 20px;
   padding-bottom: 20px;
-  position: fixed;
+  /* position: fixed; */
 }
 .header:hover {
   background-color: rgba(105, 105, 105, 0.5);

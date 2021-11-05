@@ -16,14 +16,38 @@ export default class ImagesApiService {
 
     // return
     const response = await fetch(
-      `${url}/?key=${key}&q=${this.searchQuery}&image_type=photo&image_type=photo&orientation=horizontal&safesearch=true&per_page=5&page=${this.page}`,
+      `${url}/?key=${key}&q=${this.searchQuery}&image_type=photo&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&page=${this.page}`,
     );
+    console.log(response);
     const newImage = await response.json().then(data => {
       this.incrementPage();
       console.log(data);
       return data.hits;
     });
     return newImage;
+    //============================================================
+    //   try {
+    //     const response = await axios.get(
+    //       `${url}/?key=${key}&q=${this.searchQuery}&image_type=photo&image_type=photo&orientation=horizontal&safesearch=true&per_page=5&page=${this.page}`,
+    //     );
+    //     console.log(response);
+
+    //     const newImage = await response.json();
+    //     const hits = await newImage.then(data => {
+    //       this.incrementPage();
+
+    //       console.log(data);
+    //       return data.hits;
+    //     });
+
+    //     console.log(response);
+    //     console.log(newImage);
+    //     console.log(hits);
+    //     return hits;
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    //============================================================
   }
 
   incrementPage() {

@@ -17,38 +17,33 @@ refs.btnLoadMore.addEventListener('click', onLoadMore);
 
 function onSearch(event) {
   event.preventDefault();
+
   imagesApiService.query = event.currentTarget.elements.searchQuery.value;
   imagesApiService.resetPage();
 
-  // console.log(imagesApiService.query);
-  imagesApiService
-    .fetchImages()
-    .then(appendImagesMarkup)
-    .catch(error => console.log(error));
+  imagesApiService.fetchImages().then(images => {
+    clearImagesGallery();
+    appendImagesMarkup(images);
+  });
+  // .catch(error => console.log(error));
 }
 
 function onLoadMore() {
-  imagesApiService
-    .fetchImages()
-    .then(appendImagesMarkup)
-    .catch(error => console.log(error));
+  imagesApiService.fetchImages().then(appendImagesMarkup);
+  // .catch(error => console.log(error));
 }
 
 function appendImagesMarkup(hits) {
+  if (hits.length === 0) {
+    console.log('Sorry, there are no images matching your search query. Please try again.');
+  }
   console.log(hits);
   refs.gallery.insertAdjacentHTML('beforeend', imagesCardsTpl(hits));
 }
 
-// Каждое изображение описывается объектом, из которого тебе интересны только следующие свойства:
-
-// webformatURL - ссылка на маленькое изображение для списка карточек.
-// largeImageURL - ссылка на большое изображение.
-// tags - строка с описанием изображения. Подойдет для атрибута alt.
-// likes - количество лайков.
-// views - количество просмотров.
-// comments - количество комментариев.
-// downloads - количество загрузок.
-
+function clearImagesGallery() {
+  refs.gallery.innerHTML = '';
+}
 // рендер карточок: https://youtu.be/poxVZxvONF8?t=3271
 
 // https://youtu.be/poxVZxvONF8?t=798

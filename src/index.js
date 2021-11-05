@@ -1,4 +1,4 @@
-// import imagesCardsTpl from './templates/images-card.hbs';
+import imagesCardsTpl from './templates/images-card.hbs';
 import './css/styles.css';
 import ImagesApiService from './js/images-servise';
 
@@ -21,18 +21,17 @@ function onSearch(event) {
   imagesApiService.resetPage();
 
   // console.log(imagesApiService.query);
-  imagesApiService.fetchImages().then(hits => console.log(hits));
-  // then(appendImagesMarkup);
+  imagesApiService.fetchImages().then(appendImagesMarkup);
 }
 
 function onLoadMore() {
-  imagesApiService.fetchImages().then(hits => console.log(hits));
-  // then(appendImagesMarkup);
+  imagesApiService.fetchImages().then(appendImagesMarkup);
 }
 
-// function appendImagesMarkup(hits) {
-//   refs.gallery.insertAdjacentHTML('beforeend', imagesCardsTpl(hits));
-// }
+function appendImagesMarkup(hits) {
+  console.log(hits);
+  refs.gallery.insertAdjacentHTML('beforeend', imagesCardsTpl(hits));
+}
 
 // Каждое изображение описывается объектом, из которого тебе интересны только следующие свойства:
 

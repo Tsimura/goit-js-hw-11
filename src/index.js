@@ -21,11 +21,17 @@ function onSearch(event) {
   imagesApiService.resetPage();
 
   // console.log(imagesApiService.query);
-  imagesApiService.fetchImages().then(appendImagesMarkup);
+  imagesApiService
+    .fetchImages()
+    .then(appendImagesMarkup)
+    .catch(error => console.log(error));
 }
 
 function onLoadMore() {
-  imagesApiService.fetchImages().then(appendImagesMarkup);
+  imagesApiService
+    .fetchImages()
+    .then(appendImagesMarkup)
+    .catch(error => console.log(error));
 }
 
 function appendImagesMarkup(hits) {

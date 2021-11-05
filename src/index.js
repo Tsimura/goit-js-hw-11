@@ -11,7 +11,7 @@ const loadMoreBtn = new LoadMoreBtn({ selector: '.load-more', hidden: true });
 const imagesApiService = new ImagesApiService();
 
 refs.searchForm.addEventListener('submit', onSearch);
-loadMoreBtn.refs.button.addEventListener('click', fetchImages);
+loadMoreBtn.refs.button.addEventListener('click', loadMore);
 
 function onSearch(event) {
   event.preventDefault();
@@ -25,12 +25,18 @@ function onSearch(event) {
   clearImagesGallery();
   fetchImages();
 }
+function loadMore() {
+  fetchImages();
+  // console.log('totalHits:', totalHits);
+}
 
 function fetchImages() {
   loadMoreBtn.disable();
   imagesApiService.fetchImages().then(images => {
     appendImagesMarkup(images);
     loadMoreBtn.enable();
+    // console.log('hits:', hits);
+    // console.log('totalHits:', totalHits);
   });
 }
 

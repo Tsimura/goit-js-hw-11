@@ -1,3 +1,4 @@
+// class: https://www.youtube.com/watch?v=pRZaFoXlBLU&ab_channel=GoIT
 const axios = require('axios');
 export default class ImagesApiService {
   constructor() {
@@ -19,11 +20,10 @@ export default class ImagesApiService {
     const response = await fetch(
       `${BASE_URL}/?key=${API_KEY}&q=${this.searchQuery}&image_type=photo&image_type=photo&orientation=horizontal&safesearch=true&per_page=5&page=${this.page}`,
     );
-    console.log(response);
-    const newImage = await response.json().then(({ hits, totalHits }) => {
+    // console.log(response);
+    const newImage = await response.json().then(({ hits }) => {
       this.incrementPage();
-      console.log(hits);
-      // console.log('totalHits:', totalHits);
+
       return hits;
     });
     return newImage;

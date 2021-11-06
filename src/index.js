@@ -10,17 +10,19 @@ import LoadMoreBtn from './js/components/load-more-btn';
 
 const lightbox = new SimpleLightbox('.gallery a', {
   captions: true,
-  // captionsData: 'alt',
-  // captionPosition: 'bottom',
-  // captionDelay: 250,
-});
-lightbox.on('show.simplelightbox', function () {
-  console.log(123);
 });
 
 const refs = getRefs();
 const loadMoreBtn = new LoadMoreBtn({ selector: '.load-more', hidden: true });
 const imagesApiService = new ImagesApiService();
+// let elem = document.querySelector('.container');
+// let infScroll = new InfiniteScroll(elem, {
+//   path: loadMore,
+//   append: imagesApiService.page,
+//   // outlayer: msnry,
+//   // status: '.page-load-status',
+// });
+// console.log('page:', imagesApiService.page);
 
 refs.searchForm.addEventListener('submit', onSearch);
 loadMoreBtn.refs.button.addEventListener('click', loadMore);
@@ -69,6 +71,7 @@ async function fetchImages() {
     imagesApiService.fetchImages().then(images => {
       console.log('totalHits:', imagesApiService.totalHits);
       appendImagesMarkup(images);
+      // scrollPageToDown();
       loadMoreBtn.enable();
       lightbox.refresh();
       console.log(`Hooray! We found ${imagesApiService.totalHits} images.`);
@@ -95,12 +98,12 @@ function clearImagesGallery() {
 }
 
 // function scrollPageToDown() {
-//   const { height: cardHeight } = document
-//     .querySelector('.gallery')
-//     .firstElementChild.getBoundingClientRect();
+//   setTimeout(() => {
+//     const cardHeight = document.querySelector('.gallery').firstElementChild.getBoundingClientRect();
 
-//   window.scrollBy({
-//     top: cardHeight * 2,
-//     behavior: 'smooth',
-//   });
+//     window.scrollBy({
+//       top: cardHeight * 2,
+//       behavior: 'smooth',
+//     });
+//   }, 1000);
 // }

@@ -41,3 +41,36 @@ img {
 .button > .spinner.is-hidden {
   display: none;
 }
+
+.gallery {
+  list-style: none;
+  display: inline-grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.gallery-item {
+  margin: 15px;
+  box-shadow: 1px 4px 6px rgba(0, 0, 0, 0.16), 0px 4px 4px rgba(0, 0, 0, 0.06),
+    0px 1px 1px rgba(0, 0, 0, 0.12);
+  transition: all 500ms ease;
+  border-radius: 15px;
+}
+
+.gallery-item:hover {
+  transform: scale(1.1);
+}
+
+.img-container {
+  height: 287px;
+  object-fit: cover;
+  overflow: hidden;
+}
+
+.info {
+  display: flex;
+  color: #212121;
+}
+.info-item {
+  margin-left: 30px;
+  vertical-align: top;
+}

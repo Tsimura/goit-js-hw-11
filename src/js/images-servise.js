@@ -19,21 +19,21 @@ export default class ImagesApiService {
 
     // return
     // підведення підсумків https://youtu.be/poxVZxvONF8?t=3957
-    const response = await fetch(
-      `${BASE_URL}/?key=${API_KEY}&q=${this.searchQuery}&${FILTER}&per_page=10&page=${this.page}`,
-    );
-    // console.log(response);
-    const newImage = await response.json().then(({ hits, totalHits, valueImages }) => {
-      this.valueImages = totalHits - hits.length * this.page;
-      this.totalHits = totalHits;
-
-      this.incrementPage();
-
-      // console.log('totalHits:', totalHits, 'hits.length:', hits.length);
-      // console.log('this.valueImages:', this.valueImages);
-      return hits;
-    });
-    return newImage;
+    try {
+      const response = await fetch(
+        `${BASE_URL}/?key=${API_KEY}&q=${this.searchQuery}&${FILTER}&per_page=10&page=${this.page}`,
+      );
+      // console.log(response);
+      const newImage = await response.json().then(({ hits, totalHits, valueImages }) => {
+        this.valueImages = totalHits - hits.length * this.page;
+        this.totalHits = totalHits;
+        this.incrementPage();
+        return hits;
+      });
+      return newImage;
+    } catch (error) {
+      console.log(error.message);
+    }
   }
 
   incrementPage() {

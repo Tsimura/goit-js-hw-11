@@ -65,10 +65,12 @@ async function fetchImages() {
       console.log('page:', imagesApiService.page);
       console.log('valueImages:', imagesApiService.valueImages);
       console.log('totalHits:', imagesApiService.totalHits);
+      console.log(imagesApiService);
       console.log(`Hooray! We found ${imagesApiService.totalHits} images.`);
     }
     loadMoreBtn.disable();
     imagesApiService.fetchImages().then(images => {
+      console.log('page:', imagesApiService.page);
       console.log('totalHits:', imagesApiService.totalHits);
       appendImagesMarkup(images);
       // scrollPageToDown();
@@ -89,7 +91,6 @@ function appendImagesMarkup(hits) {
     alert('Sorry, there are no images matching your search query. Please try again.');
   }
   console.log(hits);
-  // console.log(this.valueImages);
   refs.gallery.insertAdjacentHTML('beforeend', imagesMarkup);
 }
 

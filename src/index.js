@@ -73,7 +73,7 @@ async function fetchImages() {
       console.log('page:', imagesApiService.page);
       console.log('totalHits:', imagesApiService.totalHits);
       appendImagesMarkup(images);
-      // scrollPageToDown();
+      scrollPageToDown();
       loadMoreBtn.enable();
       lightbox.refresh();
       console.log(`Hooray! We found ${imagesApiService.totalHits} images.`);
@@ -98,13 +98,13 @@ function clearImagesGallery() {
   refs.gallery.innerHTML = '';
 }
 
-// function scrollPageToDown() {
-//   setTimeout(() => {
-//     const cardHeight = document.querySelector('.gallery').firstElementChild.getBoundingClientRect();
-
-//     window.scrollBy({
-//       top: cardHeight * 2,
-//       behavior: 'smooth',
-//     });
-//   }, 1000);
-// }
+function scrollPageToDown() {
+  setTimeout(() => {
+    const { y } = document.querySelector('.gallery').firstElementChild.getBoundingClientRect();
+    const viewportHeight = document.documentElement.clientHeight;
+    window.scrollBy({
+      top: viewportHeight - y * 2,
+      behavior: 'smooth',
+    });
+  }, 1000);
+}

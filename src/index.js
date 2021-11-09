@@ -42,11 +42,13 @@ function onSearch(event) {
   fetchImages(searchQuery, currentPage).then(images => {
     clearImagesGallery();
     appendImagesMarkup(images);
+
     loadMoreBtn.enable();
     Notiflix.Notify.success(`Hooray! We found ${images.totalHits} images.`);
+    scrollPageToDown();
   });
 
-  // scrollPageToDown();
+  scrollPageToDown();
 }
 
 // скинути значення поточної сторінки
@@ -64,7 +66,6 @@ function appendImagesMarkup({ totalHits, hits }) {
   // console.log('hits:', hits);
   // console.log('totalImagesUploaded:', totalImagesUploaded);
 
-  // 30 !!!не забути замінити значення після перевірки виконання умови
   if (totalImagesUploaded === totalHits) {
     console.log('totalImagesUploaded:', totalImagesUploaded);
     Notiflix.Notify.failure("We're sorry, but you've reached the end of search results.");
@@ -84,7 +85,11 @@ function incrementPage() {
   currentPage += 1;
 }
 
-// Показав більше фото
+// Очистив все поле
+function clearImagesGallery() {
+  refs.gallery.innerHTML = '';
+}
+
 function loadMore() {
   loadMoreBtn.disable();
   fetchImages(searchQuery, currentPage).then(images => {
@@ -94,39 +99,28 @@ function loadMore() {
 
   // scrollPageToDown();
 }
-
-// Очистив все поле
-function clearImagesGallery() {
-  refs.gallery.innerHTML = '';
+function scrollPageToDown() {
+  setTimeout(() => {
+    console.log('scrollPageToDown');
+    const { height: cardHeight } = document
+      .querySelector('.gallery')
+      .firstElementChild.getBoundingClientRect();
+    // const viewportHeight = document.documentElement.clientHeight;
+    window.scrollBy({
+      top: cardHeight * 2,
+      behavior: 'smooth',
+    });
+  }, 1500);
 }
 
-// function scrollPageToDown() {
-//   setTimeout(() => {
-//     console.log('scrollPageToDown');
-//     const { y } = document.querySelector('.gallery').firstElementChild.getBoundingClientRect();
-//     const viewportHeight = document.documentElement.clientHeight;
-//     window.scrollBy({
-//       top: viewportHeight - y * 2,
-//       behavior: 'smooth',
-//     });
-//   }, 1500);
-// }
+window.addEventListener('scroll', autoScroll);
 
-//===========================================================
-// function onGalleryCatchClick(e) {
-//   e.preventDefault();
-//   if (e.target.classList.contains('gallery-item')) {
-//     return;
-//   }
-//   console.log(e.target);
-// }
-
-window.addEventListener('scroll', () => {
+function autoScroll() {
   // console.log(window.scrollY);
   // console.log(window.innerHeight);
   if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight) {
     // loadImages();
     loadMore();
-    console.log('123');
+    console.log('autoScroll');
   }
-});
+}

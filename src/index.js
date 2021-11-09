@@ -17,23 +17,17 @@ let totalImagesUploaded = 0;
 const lightbox = new SimpleLightbox('.gallery a', {
   captions: true,
 });
-// const imagesApiService = new ImagesApiService();
-// let elem = document.querySelector('.container');
-// let infScroll = new InfiniteScroll(elem, {}
 
 refs.searchForm.addEventListener('submit', onSearch);
 loadMoreBtn.refs.button.addEventListener('click', loadMore);
-// refs.gallery.addEventListener('click', onGalleryCatchClick);
 
-//============ бЛОК ФУНКЦІЙ:
-//пошук картинок
 function onSearch(event) {
   event.preventDefault();
   searchQuery = event.currentTarget.elements.searchQuery.value.trim();
   resetCurrentPage();
   resetTotalImagesUpload();
   if (searchQuery === '') {
-    return Notiflix.Notify.failure('Введіть параметр запиту!');
+    return Notiflix.Notify.warning('Введіть параметр запиту!');
   }
 
   loadMoreBtn.show();
@@ -42,16 +36,14 @@ function onSearch(event) {
   fetchImages(searchQuery, currentPage).then(images => {
     clearImagesGallery();
     appendImagesMarkup(images);
-
+    console.log(images);
     loadMoreBtn.enable();
     Notiflix.Notify.success(`Hooray! We found ${images.totalHits} images.`);
     scrollPageToDown();
   });
-
   scrollPageToDown();
 }
 
-// скинути значення поточної сторінки
 function resetCurrentPage() {
   currentPage = 1;
 }
@@ -59,35 +51,31 @@ function resetCurrentPage() {
 function resetTotalImagesUpload() {
   totalImagesUploaded = 0;
 }
-// відобразив карточки з фото
+
 function appendImagesMarkup({ totalHits, hits }) {
   const imagesMarkup = imagesCardsTpl(hits);
   totalImagesUploaded += hits.length;
-  // console.log('hits:', hits);
-  // console.log('totalImagesUploaded:', totalImagesUploaded);
-
-  if (totalImagesUploaded === totalHits) {
-    console.log('totalImagesUploaded:', totalImagesUploaded);
-    Notiflix.Notify.failure("We're sorry, but you've reached the end of search results.");
-    loadMoreBtn.hide();
-  }
-
-  incrementPage();
   if (hits.length === 0) {
-    Notiflix.Notify.failure(
+    return Notiflix.Notify.failure(
       'Sorry, there are no images matching your search query. Please try again.',
     );
   }
+  if (totalImagesUploaded === totalHits) {
+    console.log('totalImagesUploaded:', totalImagesUploaded);
+    loadMoreBtn.hide();
+    Notiflix.Notify.failure("We're sorry, but you've reached the end of search results.");
+  }
+
+  incrementPage();
+
   refs.gallery.insertAdjacentHTML('beforeend', imagesMarkup);
   lightbox.refresh();
 }
 
-// наступна сторінка
 function incrementPage() {
   currentPage += 1;
 }
 
-// Очистив все поле
 function clearImagesGallery() {
   refs.gallery.innerHTML = '';
 }
@@ -98,8 +86,6 @@ function loadMore() {
     appendImagesMarkup(images);
     loadMoreBtn.enable();
   });
-
-  // scrollPageToDown();
 }
 function scrollPageToDown() {
   setTimeout(() => {
@@ -121,7 +107,6 @@ function autoScroll() {
   // console.log(window.scrollY);
   // console.log(window.innerHeight);
   if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight) {
-    // loadImages();
     loadMore();
     console.log('autoScroll');
   }

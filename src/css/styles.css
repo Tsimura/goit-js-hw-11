@@ -19,22 +19,18 @@ img {
 .header {
   height: 100px;
   width: 100%;
-  /* z-index: 1000; */
+  z-index: 1000;
   padding-top: 20px;
   padding-bottom: 20px;
   overflow: hidden;
   position: fixed;
   background-image: url(../images/bg.jpg);
 }
-/* .header:hover {
-  background-color: rgba(105, 105, 105, 0.5);
-} */
 
 .search-form {
   display: flex;
   align-items: baseline;
-  justify-content: flex-end;
-  margin-right: 50px;
+  justify-content: center;
 }
 .search-input {
   background-color: rgb(240, 240, 240);

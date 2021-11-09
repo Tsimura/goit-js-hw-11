@@ -39,14 +39,12 @@ function onSearch(event) {
   loadMoreBtn.show();
   loadMoreBtn.disable();
 
-  fetchImages(searchQuery, currentPage)
-    .then(images => {
-      clearImagesGallery();
-      appendImagesMarkup(images);
-      loadMoreBtn.enable();
-      Notiflix.Notify.success(`Hooray! We found ${images.totalHits} images.`);
-    })
-    .catch(onFetchError);
+  fetchImages(searchQuery, currentPage).then(images => {
+    clearImagesGallery();
+    appendImagesMarkup(images);
+    loadMoreBtn.enable();
+    Notiflix.Notify.success(`Hooray! We found ${images.totalHits} images.`);
+  });
 
   // scrollPageToDown();
 }
@@ -89,12 +87,11 @@ function incrementPage() {
 // Показав більше фото
 function loadMore() {
   loadMoreBtn.disable();
-  fetchImages(searchQuery, currentPage)
-    .then(images => {
-      appendImagesMarkup(images);
-      loadMoreBtn.enable();
-    })
-    .catch(onFetchError);
+  fetchImages(searchQuery, currentPage).then(images => {
+    appendImagesMarkup(images);
+    loadMoreBtn.enable();
+  });
+
   // scrollPageToDown();
 }
 
@@ -115,10 +112,6 @@ function clearImagesGallery() {
 //   }, 1500);
 // }
 
-function onFetchError(error) {
-  console.log(error);
-}
-
 //===========================================================
 // function onGalleryCatchClick(e) {
 //   e.preventDefault();
@@ -127,3 +120,13 @@ function onFetchError(error) {
 //   }
 //   console.log(e.target);
 // }
+
+window.addEventListener('scroll', () => {
+  // console.log(window.scrollY);
+  // console.log(window.innerHeight);
+  if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight) {
+    // loadImages();
+    loadMore();
+    console.log('123');
+  }
+});

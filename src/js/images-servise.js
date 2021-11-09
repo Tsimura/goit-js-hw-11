@@ -1,4 +1,3 @@
-// відправка запиту на бек
 const axios = require('axios');
 const BASE_URL = `https://pixabay.com/api`;
 const API_KEY = `24121745-05691669c6e1f2eaf3f0511ee`;
@@ -9,11 +8,14 @@ async function fetchImages(images, currentPage) {
     const response = await axios.get(
       `${BASE_URL}/?key=${API_KEY}&q=${images}&${FILTER}&per_page=40&page=${currentPage}`,
     );
-    // const newImages = response.data;
     return await response.data;
   } catch (error) {
-    console.log(error);
+    onFetchError(error);
   }
+}
+
+function onFetchError(error) {
+  console.log(error);
 }
 export { fetchImages };
 

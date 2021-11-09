@@ -20,10 +20,11 @@ img {
   height: 100px;
   width: 100%;
   /* z-index: 1000; */
-
   padding-top: 20px;
   padding-bottom: 20px;
-  /* position: fixed; */
+  overflow: hidden;
+  position: fixed;
+  background-image: url(../images/bg.jpg);
 }
 /* .header:hover {
   background-color: rgba(105, 105, 105, 0.5);

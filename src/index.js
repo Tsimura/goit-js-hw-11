@@ -1,6 +1,7 @@
 const axios = require('axios');
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
+import Notiflix from 'notiflix';
 import { fetchImages } from '../src/js/images-servise';
 import getRefs from './js/get-refs';
 import imagesCardsTpl from './templates/images-card.hbs';
@@ -16,32 +17,40 @@ const refs = getRefs();
 const loadMoreBtn = new LoadMoreBtn({ selector: '.load-more', hidden: true });
 let searchQuery = '';
 let currentPage = 1;
-let allImages = 0;
-let imagesFound = 0;
+let totalImagesUploaded = 0;
+
 // const imagesApiService = new ImagesApiService();
 // let elem = document.querySelector('.container');
 // let infScroll = new InfiniteScroll(elem, {}
 
 refs.searchForm.addEventListener('submit', onSearch);
 loadMoreBtn.refs.button.addEventListener('click', loadMore);
-refs.gallery.addEventListener('click', onGalleryCatchClick);
+// refs.gallery.addEventListener('click', onGalleryCatchClick);
 
+//============ бЛОК ФУНКЦІЙ:
 //пошук картинок
 function onSearch(event) {
   event.preventDefault();
-  // loadMoreBtn.disable();
-  resetCurrentPage();
   searchQuery = event.currentTarget.elements.searchQuery.value.trim();
+  resetCurrentPage();
+  resetTotalImagesUpload();
   if (searchQuery === '') {
-    return alert('Введіть параметр запиту!');
+    return Notiflix.Notify.failure('Введіть параметр запиту!');
   }
-  clearImagesGallery();
-  fetchImages(searchQuery, currentPage).then(appendImagesMarkup).catch(onFetchError);
 
   loadMoreBtn.show();
+  loadMoreBtn.disable();
+
+  fetchImages(searchQuery, currentPage)
+    .then(images => {
+      clearImagesGallery();
+      appendImagesMarkup(images);
+      loadMoreBtn.enable();
+      Notiflix.Notify.success(`Hooray! We found ${images.totalHits} images.`);
+    })
+    .catch(onFetchError);
+
   // scrollPageToDown();
-  // console.log('searchQuery:', searchQuery);
-  console.log('Знайшли всього фото:', imagesFound);
 }
 
 // скинути значення поточної сторінки
@@ -49,37 +58,45 @@ function resetCurrentPage() {
   currentPage = 1;
 }
 
+function resetTotalImagesUpload() {
+  totalImagesUploaded = 0;
+}
 // відобразив карточки з фото
 function appendImagesMarkup({ totalHits, hits }) {
   const imagesMarkup = imagesCardsTpl(hits);
-  allImages += hits.length;
-  imagesFound += totalHits;
-  console.log('Знайшли всього фото:', imagesFound);
-  console.log('hits:', hits);
-  console.log('totalHits:', totalHits);
-  console.log('allImages:', allImages);
+  totalImagesUploaded += hits.length;
+  // console.log('hits:', hits);
+  // console.log('totalImagesUploaded:', totalImagesUploaded);
 
-  if (allImages === totalHits) {
+  // 30 !!!не забути замінити значення після перевірки виконання умови
+  if (totalImagesUploaded === totalHits) {
+    console.log('totalImagesUploaded:', totalImagesUploaded);
+    Notiflix.Notify.failure("We're sorry, but you've reached the end of search results.");
     loadMoreBtn.hide();
-    return alert("We're sorry, but you've reached the end of search results.");
   }
 
-  currentPage += 1;
+  incrementPage();
   if (hits.length === 0) {
     alert('Sorry, there are no images matching your search query. Please try again.');
   }
-
   refs.gallery.insertAdjacentHTML('beforeend', imagesMarkup);
   lightbox.refresh();
 }
 
+// наступна сторінка
+function incrementPage() {
+  currentPage += 1;
+}
+
 // Показав більше фото
 function loadMore() {
-  // if (imagesApiService.valueImages <= 470) {
-  // loadMoreBtn.hide();
-  //   return alert("We're sorry, but you've reached the end of search results.");
-  // }
-  fetchImages(searchQuery, currentPage).then(appendImagesMarkup).catch(onFetchError);
+  loadMoreBtn.disable();
+  fetchImages(searchQuery, currentPage)
+    .then(images => {
+      appendImagesMarkup(images);
+      loadMoreBtn.enable();
+    })
+    .catch(onFetchError);
 }
 
 // Очистив все поле
@@ -103,13 +120,13 @@ function onFetchError(error) {
   console.log(error);
 }
 
-function onGalleryCatchClick(e) {
-  e.preventDefault();
-  if (e.target.classList.contains('gallery-item')) {
-    return;
-  }
-  console.log(e.target);
-}
+// function onGalleryCatchClick(e) {
+//   e.preventDefault();
+//   if (e.target.classList.contains('gallery-item')) {
+//     return;
+//   }
+//   console.log(e.target);
+// }
 //===========================================================
 // function onGalleryCatchClick(e) {
 //   e.preventDefault();

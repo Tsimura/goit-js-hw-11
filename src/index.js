@@ -74,7 +74,9 @@ function appendImagesMarkup({ totalHits, hits }) {
 
   incrementPage();
   if (hits.length === 0) {
-    alert('Sorry, there are no images matching your search query. Please try again.');
+    Notiflix.Notify.failure(
+      'Sorry, there are no images matching your search query. Please try again.',
+    );
   }
   refs.gallery.insertAdjacentHTML('beforeend', imagesMarkup);
   lightbox.refresh();

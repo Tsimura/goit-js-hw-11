@@ -1,17 +1,12 @@
 const axios = require('axios');
 import SimpleLightbox from 'simplelightbox';
-import 'simplelightbox/dist/simple-lightbox.min.css';
 import Notiflix from 'notiflix';
-import { fetchImages } from '../src/js/images-servise';
-import getRefs from './js/get-refs';
-import imagesCardsTpl from './templates/images-card.hbs';
+import 'simplelightbox/dist/simple-lightbox.min.css';
 import './css/styles.css';
-// import ImagesApiService from './js/images-servise';
+import getRefs from './js/get-refs';
+import { fetchImages } from '../src/js/images-servise';
+import imagesCardsTpl from './templates/images-card.hbs';
 import LoadMoreBtn from './js/components/load-more-btn';
-
-const lightbox = new SimpleLightbox('.gallery a', {
-  captions: true,
-});
 
 const refs = getRefs();
 const loadMoreBtn = new LoadMoreBtn({ selector: '.load-more', hidden: true });
@@ -19,6 +14,9 @@ let searchQuery = '';
 let currentPage = 1;
 let totalImagesUploaded = 0;
 
+const lightbox = new SimpleLightbox('.gallery a', {
+  captions: true,
+});
 // const imagesApiService = new ImagesApiService();
 // let elem = document.querySelector('.container');
 // let infScroll = new InfiniteScroll(elem, {}
@@ -97,6 +95,7 @@ function loadMore() {
       loadMoreBtn.enable();
     })
     .catch(onFetchError);
+  // scrollPageToDown();
 }
 
 // Очистив все поле
@@ -120,83 +119,11 @@ function onFetchError(error) {
   console.log(error);
 }
 
-// function onGalleryCatchClick(e) {
-//   e.preventDefault();
-//   if (e.target.classList.contains('gallery-item')) {
-//     return;
-//   }
-//   console.log(e.target);
-// }
 //===========================================================
 // function onGalleryCatchClick(e) {
 //   e.preventDefault();
 //   if (e.target.classList.contains('gallery-item')) {
 //     return;
 //   }
-//   // console.log(e.target);
-// }
-
-// async function fetchImages() {
-//   try {
-//     loadMoreBtn.disable();
-//     imagesApiService.fetchImages().then(images => {
-//     appendImagesMarkup(images);
-//       scrollPageToDown();
-//       loadMoreBtn.enable();
-//       lightbox.refresh();
-//       console.log(`Hooray! We found ${imagesApiService.totalHitsV} images.`);
-//     });
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
-
-//--------------------------------------------------------------- переробив
-
-// function onSearch(event) {
-//   event.preventDefault();
-
-//   imagesApiService.query = event.currentTarget.elements.searchQuery.value.trim();
-//   if (imagesApiService.query === '') {
-//     return alert('Введіть параметр запиту!');
-//   }
-
-//   loadMoreBtn.show();
-//   imagesApiService.resetPage();
-//   clearImagesGallery();
-//   fetchImages();
-//   // console.log(`Hooray! We found ${imagesApiService.totalHits} images.`);
-// }
-
-// function clearImagesGallery() {
-//   refs.gallery.innerHTML = '';
-// }
-
-// function loadMore() {
-//   if (imagesApiService.valueImages <= 470) {
-//     loadMoreBtn.hide();
-//     return alert("We're sorry, but you've reached the end of search results.");
-//   }
-//   fetchImages();
-// }
-
-// function appendImagesMarkup(hits) {
-//   const imagesMarkup = imagesCardsTpl(hits);
-//   if (hits.length === 0) {
-//     // console.log(hits.length);
-//     alert('Sorry, there are no images matching your search query. Please try again.');
-//   }
-//   // console.log(hits);
-//   refs.gallery.insertAdjacentHTML('beforeend', imagesMarkup);
-// }
-
-// function scrollPageToDown() {
-//   setTimeout(() => {
-//     const { y } = document.querySelector('.gallery').firstElementChild.getBoundingClientRect();
-//     const viewportHeight = document.documentElement.clientHeight;
-//     window.scrollBy({
-//       top: viewportHeight - y * 2,
-//       behavior: 'smooth',
-//     });
-//   }, 1500);
+//   console.log(e.target);
 // }

@@ -37,10 +37,10 @@ function onSearch(event) {
   fetchImages(searchQuery, currentPage).then(images => {
     clearImagesGallery();
     appendImagesMarkup(images);
-    console.log(images);
+    // console.log(images);
     loadMoreBtn.enable();
     Notiflix.Notify.success(`Hooray! We found ${images.totalHits} images.`);
-    // scrollPageToDown();
+    scrollPageToDown();
   });
   // scrollPageToDown();
 }
@@ -88,19 +88,19 @@ function loadMore() {
     loadMoreBtn.enable();
   });
 }
-// function scrollPageToDown() {
-//   setTimeout(() => {
-//   console.log('scrollPageToDown');
-//   const { height: cardHeight } = document
-//     .querySelector('.gallery')
-//     .firstElementChild.getBoundingClientRect();
-//   const viewportHeight = document.documentElement.clientHeight;
-//   window.scrollBy({
-//     top: cardHeight * 2,
-//     behavior: 'smooth',
-//   });
-//   }, 1500);
-// }
+function scrollPageToDown() {
+  // setTimeout(() => {
+  console.log('scrollPageToDown');
+  const { height: cardHeight } = document
+    .querySelector('.gallery')
+    .firstElementChild.getBoundingClientRect();
+  // const viewportHeight = document.documentElement.clientHeight;
+  window.scrollBy({
+    top: cardHeight * 2,
+    behavior: 'smooth',
+  });
+  // }, 1500);
+}
 
 // ==============
 // window.addEventListener('scroll', autoScroll);

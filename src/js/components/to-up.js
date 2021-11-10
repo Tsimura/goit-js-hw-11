@@ -1,5 +1,5 @@
 $(document).ready(function () {
-  $('body').append('<a href="#" id="go-top" >🎈Вверх</a>');
+  $('body').append('<a href="#" id="go-top" >🚀 UP 🚀</a>');
 });
 
 $(function () {

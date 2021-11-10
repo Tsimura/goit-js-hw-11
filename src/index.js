@@ -1,4 +1,5 @@
 // const axios = require('axios');
+const debounce = require('lodash.debounce');
 import SimpleLightbox from 'simplelightbox';
 import Notiflix from 'notiflix';
 import 'simplelightbox/dist/simple-lightbox.min.css';
@@ -42,6 +43,7 @@ function onSearch(event) {
     Notiflix.Notify.success(`Hooray! We found ${images.totalHits} images.`);
     scrollPageToDown();
   });
+
   // scrollPageToDown();
 }
 
@@ -96,9 +98,20 @@ function scrollPageToDown() {
     top: cardHeight.y * 2,
     behavior: 'smooth',
   });
-  console.log('cardHeight:', cardHeight);
-  console.log('Height:', cardHeight.y);
+  // console.log('cardHeight:', cardHeight);
+  // console.log('Height:', cardHeight.y);
 }
+// ===========================
+// window.addEventListener('scroll', debounce(autoFetch(), 1500));
+
+// function autoFetch() {
+//   const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+//   console.log({ scrollTop, scrollHeight, clientHeight });
+//   if (clientHeight + scrollTop === scrollHeight) {
+//     console.log('FETCH!!!');
+//     loadMore();
+//   }
+// }
 
 // ==============
 // window.addEventListener('scroll', autoScroll);

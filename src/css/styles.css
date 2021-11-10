@@ -13,18 +13,15 @@ img {
   /* height: auto; */
 }
 .body-bg {
-  background-image: url(../images/bg.jpg);
+  background: url(../images/bg.jpg) top right no-repeat;
+  background-attachment: fixed;
 }
 
 .header {
   height: 100px;
   width: 100%;
-  z-index: 1000;
   padding-top: 20px;
   padding-bottom: 20px;
-  overflow: hidden;
-  position: fixed;
-  background-image: url(../images/bg.jpg);
 }
 
 .search-form {
@@ -43,6 +40,9 @@ img {
   margin-left: 15px;
   border-radius: 5px;
 }
+/* .search-input:hover,
+.search-input:focus {
+} */
 
 /* button */
 .button {
@@ -98,4 +98,24 @@ img {
   align-items: center;
   margin-left: 30px;
   vertical-align: top;
+}
+/* ---- */
+
+#go-top {
+  position: fixed;
+  bottom: 25px;
+  right: 70px;
+  text-align: center;
+  cursor: pointer;
+  display: none;
+  width: 80px;
+  height: 30px;
+  background: #f7f4f4;
+  line-height: 30px;
+  border-radius: 5px;
+}
+
+#go-top:hover {
+  background: rgb(189, 186, 186);
+  /* color: #fff; */
 }

@@ -3,6 +3,7 @@ import SimpleLightbox from 'simplelightbox';
 import Notiflix from 'notiflix';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import './css/styles.css';
+import '../src/js/components/to-up';
 import getRefs from './js/get-refs';
 import { fetchImages } from '../src/js/images-servise';
 import imagesCardsTpl from './templates/images-card.hbs';
@@ -39,9 +40,9 @@ function onSearch(event) {
     console.log(images);
     loadMoreBtn.enable();
     Notiflix.Notify.success(`Hooray! We found ${images.totalHits} images.`);
-    scrollPageToDown();
+    // scrollPageToDown();
   });
-  scrollPageToDown();
+  // scrollPageToDown();
 }
 
 function resetCurrentPage() {
@@ -87,27 +88,42 @@ function loadMore() {
     loadMoreBtn.enable();
   });
 }
-function scrollPageToDown() {
-  setTimeout(() => {
-    console.log('scrollPageToDown');
-    const { height: cardHeight } = document
-      .querySelector('.gallery')
-      .firstElementChild.getBoundingClientRect();
-    // const viewportHeight = document.documentElement.clientHeight;
-    window.scrollBy({
-      top: cardHeight * 2,
-      behavior: 'smooth',
-    });
-  }, 1500);
-}
+// function scrollPageToDown() {
+//   setTimeout(() => {
+//   console.log('scrollPageToDown');
+//   const { height: cardHeight } = document
+//     .querySelector('.gallery')
+//     .firstElementChild.getBoundingClientRect();
+//   const viewportHeight = document.documentElement.clientHeight;
+//   window.scrollBy({
+//     top: cardHeight * 2,
+//     behavior: 'smooth',
+//   });
+//   }, 1500);
+// }
 
-window.addEventListener('scroll', autoScroll);
+// ==============
+// window.addEventListener('scroll', autoScroll);
 
-function autoScroll() {
-  // console.log(window.scrollY);
-  // console.log(window.innerHeight);
-  if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight) {
-    loadMore();
-    console.log('autoScroll');
-  }
-}
+// function autoScroll() {
+//   // console.log(window.scrollY);
+//   // console.log(window.innerHeight);
+//   if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight) {
+//     loadMore();
+//     console.log('autoScroll');
+//   }
+// }
+
+// =============
+
+// window.addEventListener('DOMContentLoaded', event => {
+//   console.log('DOM fully loaded and parsed');
+// });
+// window.addEventListener('load', autoScroll);
+
+// function autoScroll() {
+//   console.log('autoScroll');
+//   loadMore();
+// }
+
+// -----------------

@@ -89,17 +89,15 @@ function loadMore() {
   });
 }
 function scrollPageToDown() {
-  // setTimeout(() => {
   console.log('scrollPageToDown');
-  const { height: cardHeight } = document
-    .querySelector('.gallery')
-    .firstElementChild.getBoundingClientRect();
+  const cardHeight = document.querySelector('.gallery').firstElementChild.getBoundingClientRect();
   // const viewportHeight = document.documentElement.clientHeight;
   window.scrollBy({
-    top: cardHeight * 2,
+    top: cardHeight.y * 2,
     behavior: 'smooth',
   });
-  // }, 1500);
+  console.log('cardHeight:', cardHeight);
+  console.log('Height:', cardHeight.y);
 }
 
 // ==============

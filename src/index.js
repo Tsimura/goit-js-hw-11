@@ -102,23 +102,23 @@ function scrollPageToDown() {
   // console.log('Height:', cardHeight.y);
 }
 // ===========================
-// window.addEventListener('scroll', debounce(autoFetch(), 1500));
+window.addEventListener('scroll', autoFetch);
 
-// function autoFetch() {
-//   const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
-//   console.log({ scrollTop, scrollHeight, clientHeight });
-//   if (clientHeight + scrollTop === scrollHeight) {
-//     console.log('FETCH!!!');
-//     loadMore();
-//   }
-// }
+function autoFetch() {
+  const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+  // console.log({ scrollTop, scrollHeight, clientHeight });
+  if (clientHeight + scrollTop === scrollHeight) {
+    console.log('FETCH!!!');
+    loadMore();
+  }
+}
 
 // ==============
 // window.addEventListener('scroll', autoScroll);
 
 // function autoScroll() {
-//   // console.log(window.scrollY);
-//   // console.log(window.innerHeight);
+//   console.log(window.scrollY);
+//   console.log(window.innerHeight);
 //   if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight) {
 //     loadMore();
 //     console.log('autoScroll');

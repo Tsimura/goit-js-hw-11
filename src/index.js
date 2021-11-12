@@ -20,7 +20,7 @@ const lightbox = new SimpleLightbox('.gallery a', {
 });
 
 refs.searchForm.addEventListener('submit', onSearch);
-loadMoreBtn.refs.button.addEventListener('click', fetchImages);
+loadMoreBtn.refs.button.addEventListener('click', throttle(fetchImages, 300));
 
 function onSearch(event) {
   event.preventDefault();
@@ -54,7 +54,7 @@ function resetTotalImagesUpload() {
   totalImagesUploaded = 0;
 }
 
-function appendImagesMarkup({ totalHits, hits }) {
+function appendImagesMarkup({ totalHits, hits } = {}) {
   const imagesMarkup = imagesCardsTpl(hits);
   totalImagesUploaded += hits.length;
   if (hits.length === 0) {
@@ -90,7 +90,7 @@ function loadMore() {
   });
 }
 function scrollPageToDown() {
-  console.log('scrollPageToDown');
+  // console.log('scrollPageToDown');
   const cardHeight = document.querySelector('.gallery').firstElementChild.getBoundingClientRect();
   // const viewportHeight = document.documentElement.clientHeight;
   window.scrollBy({
@@ -101,13 +101,13 @@ function scrollPageToDown() {
   // console.log('Height:', cardHeight.y);
 }
 // ===========================
-window.addEventListener('scroll', throttle(autoFetch, 300));
+window.addEventListener('scroll', autoFetch);
 
 function autoFetch() {
   const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
   // console.log({ scrollTop, scrollHeight, clientHeight });
   if (clientHeight + scrollTop === scrollHeight) {
-    console.log('FETCH!!!');
+    // console.log('FETCH!!!');
     loadMore();
   }
 }

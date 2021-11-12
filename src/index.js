@@ -1,3 +1,4 @@
+let throttle = require('lodash.throttle');
 import SimpleLightbox from 'simplelightbox';
 import Notiflix from 'notiflix';
 import 'simplelightbox/dist/simple-lightbox.min.css';
@@ -19,7 +20,7 @@ const lightbox = new SimpleLightbox('.gallery a', {
 });
 
 refs.searchForm.addEventListener('submit', onSearch);
-loadMoreBtn.refs.button.addEventListener('click', loadMore);
+loadMoreBtn.refs.button.addEventListener('click', fetchImages);
 
 function onSearch(event) {
   event.preventDefault();
@@ -30,14 +31,14 @@ function onSearch(event) {
     return Notiflix.Notify.warning('Введіть параметр запиту!');
   }
 
-  loadMoreBtn.show();
-  loadMoreBtn.disable();
+  // loadMoreBtn.show();
+  // loadMoreBtn.disable();
 
   fetchImages(searchQuery, currentPage).then(images => {
     clearImagesGallery();
     appendImagesMarkup(images);
     // console.log(images);
-    loadMoreBtn.enable();
+    // loadMoreBtn.enable();
     Notiflix.Notify.success(`Hooray! We found ${images.totalHits} images.`);
     scrollPageToDown();
   });
@@ -82,10 +83,10 @@ function clearImagesGallery() {
 }
 
 function loadMore() {
-  loadMoreBtn.disable();
+  // loadMoreBtn.disable();
   fetchImages(searchQuery, currentPage).then(images => {
     appendImagesMarkup(images);
-    loadMoreBtn.enable();
+    // loadMoreBtn.enable();
   });
 }
 function scrollPageToDown() {
@@ -100,7 +101,7 @@ function scrollPageToDown() {
   // console.log('Height:', cardHeight.y);
 }
 // ===========================
-window.addEventListener('scroll', autoFetch);
+window.addEventListener('scroll', throttle(autoFetch, 300));
 
 function autoFetch() {
   const { scrollTop, scrollHeight, clientHeight } = document.documentElement;

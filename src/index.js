@@ -56,6 +56,9 @@ function resetTotalImagesUpload() {
 
 function appendImagesMarkup({ totalHits, hits } = {}) {
   const imagesMarkup = imagesCardsTpl(hits);
+  if (hits === undefined) {
+    return;
+  }
   totalImagesUploaded += hits.length;
   if (hits.length === 0) {
     return Notiflix.Notify.failure(
@@ -63,7 +66,7 @@ function appendImagesMarkup({ totalHits, hits } = {}) {
     );
   }
   if (totalImagesUploaded === totalHits) {
-    console.log('totalImagesUploaded:', totalImagesUploaded);
+    // console.log('totalImagesUploaded:', totalImagesUploaded);
     loadMoreBtn.hide();
     Notiflix.Notify.failure("We're sorry, but you've reached the end of search results.");
   }

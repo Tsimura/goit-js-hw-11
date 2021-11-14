@@ -37,3 +37,22 @@ export { fetchImages };
 //     return response.json();
 //   });
 // }
+
+// ========================== розібратись!!!!
+function onEntry(entries, observer) {
+  entries.forEach(entry => {
+    console.log(entry);
+    if (entry.isIntersecting) {
+      page += 1;
+      api(page);
+    }
+  });
+}
+
+const observer = new IntersectionObserver(onEntry, {
+  root: null,
+  rootMargin: '0px',
+  threshold: 0.5,
+});
+console.log(observer);
+// https://developer.mozilla.org/ru/docs/Web/API/Intersection_Observer_API

@@ -66,8 +66,8 @@ function appendImagesMarkup({ totalHits, hits } = {}) {
     );
   }
   if (totalImagesUploaded === totalHits) {
-    // console.log('totalImagesUploaded:', totalImagesUploaded);
-    loadMoreBtn.hide();
+    console.log('totalImagesUploaded:', totalImagesUploaded);
+    // loadMoreBtn.hide();
     Notiflix.Notify.failure("We're sorry, but you've reached the end of search results.");
   }
 
